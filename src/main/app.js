@@ -26,7 +26,8 @@ app.get('/', function(req, res)
 });
 
 //Register the address and port:
-app.post('/reg/:username', function(req, res)
+//Changing to get for right now:
+app.get('/reg/:username', function(req, res)
 {
   
   //Get username, address, and port:
@@ -35,12 +36,12 @@ app.post('/reg/:username', function(req, res)
   var port = req.client.remotePort;
   
   //Add user to list:
-  users.push = 
+  users.push(
   {
     name: username,
     ip: ipAddress,
     port: port
-  };
+  });
   console.log(users);
   
   //Text response to user:
