@@ -12,6 +12,13 @@ var express = require('express');
 
 var app = module.exports = express.createServer();
 
+//The list of users presently logged in
+//Each element is an object with the following fields:
+//  --name
+//  --ip
+//  --port
+var users = [];
+
 //Hello world:
 app.get('/', function(req, res)
 {
@@ -19,16 +26,26 @@ app.get('/', function(req, res)
 });
 
 //Register the address and port:
-app.get('/reg', function(req, res)
+app.post('/reg/:username', function(req, res)
 {
-  /*for (var i = 0; i < req.length; i++)
-  {
-    console.log(req[i]);
-  }*/
-  //console.log(req);
+  
+  //Get username, address, and port:
+  var username = req.param('username');
   var ipAddress = req.client.remoteAddress;
   var port = req.client.remotePort;
+  
+  //Add user to list:
+  users.push = 
+  {
+    name: username,
+    ip: ipAddress,
+    port: port
+  };
+  console.log(users);
+  
+  //Text response to user:
   res.send("<p>I got your address</p>" +
+           "<p>Your username is: " + username + "</p>" +
            "<p>Your I.P. address is: " + ipAddress + "</p>" +
            "<p>The port you used is: " + port + "</p>");
 });
