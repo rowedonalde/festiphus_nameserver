@@ -1,0 +1,9 @@
+This is the nameserver for the FesTiPhus desktop client
+(github.com/rowedonalde/festiphus). It runs at port 4000.
+
+REQUIREMENTS:
+node-js
+express
+
+TO START THE SERVER:
+node src/main/app.js
