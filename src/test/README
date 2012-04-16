@@ -1,0 +1,5 @@
+This test directory holds scripts to test the services offered by app.js
+
+Ideally, there should be a script in main that first starts the nameserver and
+then runs the tests. If any tests fail, the nameserver should be killed, and an
+error log should be returned
