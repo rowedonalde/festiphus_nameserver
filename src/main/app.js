@@ -32,17 +32,36 @@ app.post('/reg/:username', function(req, res)
   
   //Get username, address, and port:
   var username = req.param('username');
+  console.log(username);
   var ipAddress = req.client.remoteAddress;
   var port = req.client.remotePort;
   
   //Add user to list:
-  users.push(
+  
+  //Search through the list of users and see whether the requested
+  //name is in use. If so, break out of the loop and set
+  //usernameIsAvailable to false.
+  var usernameIsAvailable = true;
+  for (var i = 0; i < users.length; i++)
   {
-    name: username,
-    ip: ipAddress,
-    port: port
-  });
+    if (users[i].name === username)
+    {
+        usernameIsAvailable = false;
+        break;
+    }
+  }
+  
+  if (usernameIsAvailable)
+  {
+    users.push(
+    {
+      name: username,
+      ip: ipAddress,
+      port: port
+    });
+  }
   console.log(users);
+  
   
   //Text response to user:
   res.send("<p>I got your address</p>" +
@@ -91,6 +110,25 @@ app.get('/reg/:username', function(req, res)
 app.get('/myip', function(req, res)
 {
   res.send(req.client.remoteAddress);
+});
+
+
+//Return the requested user's FTP server address and port
+app.get('/whereis/:username', function(req, res)
+{
+  var username = req.param('username');
+  
+  for (var i = 0; i < users.length; i++)
+  {
+    if (users[i].name === username)
+    {
+        res.send(users[i].ip + ":" + users[i].port);
+        return;
+    }
+  }
+  
+  //If none was found:
+  res.send("No such user " + username, 210);
 });
 
 
