@@ -27,14 +27,15 @@ app.get('/', function(req, res)
 
 
 //Register the address and port:
-app.post('/reg/:username', function(req, res)
+app.post('/reg/:username/:port', function(req, res)
 {
   
   //Get username, address, and port:
   var username = req.param('username');
   console.log(username);
   var ipAddress = req.client.remoteAddress;
-  var port = req.client.remotePort;
+  //var port = req.client.remotePort;
+  var port = req.param('port');
   
   //Add user to list:
   
@@ -59,15 +60,19 @@ app.post('/reg/:username', function(req, res)
       ip: ipAddress,
       port: port
     });
+    
+    //Text response to user:
+    res.send("<p>I got your address</p>" +
+             "<p>Your username is: " + username + "</p>" +
+             "<p>Your I.P. address is: " + ipAddress + "</p>" +
+             "<p>The port you used is: " + port + "</p>");
+    
+    console.log(users);
   }
-  console.log(users);
-  
-  
-  //Text response to user:
-  res.send("<p>I got your address</p>" +
-           "<p>Your username is: " + username + "</p>" +
-           "<p>Your I.P. address is: " + ipAddress + "</p>" +
-           "<p>The port you used is: " + port + "</p>");
+  else
+  {
+    res.send("Sorry, that username is unavailable.");
+  }
 });
 
 //Return whether a requested user is logged in: 
